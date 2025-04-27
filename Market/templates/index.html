@@ -22,7 +22,7 @@
       </nav>
     </header>
     <footer>
-      <p>&copy; 2023 GoITeens. All rights reserved.</p>
+      <p>&copy; 2025 GoITeens. All rights reserved.</p>
     </footer>
   </body>
 
@@ -74,3 +74,30 @@
       </ul>
     </section>
   </main>
+  <h2>Musicians</h2>
+<table border="1">
+  <tr>
+    <th>Ім’я:</th>
+    <th>Вік:</th>
+  </tr>
+  {% for musician in musicians %}
+  <tr>
+    <td>{{ musician.name }}</td>
+    <td>{{ musician.age }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<h2>Albums</h2>
+<table border="1">
+  <tr>
+    <th>Ім’я:</th>
+    <th>Вік:</th>
+  </tr>
+  {% for album in albums %}
+  <tr>
+    <td>{{ album.name }}</td>
+    <td>{{ album.age }}</td>
+  </tr>
+  {% endfor %}
+</table>
