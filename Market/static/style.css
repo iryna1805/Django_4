@@ -4,7 +4,6 @@
     padding: 0;
   }
  
-  /* Set the background color of the body element */
   body {
     background-color: #ccbc9f;
     font-family: Arial, sans-serif;
@@ -12,7 +11,6 @@
     line-height: 1.5;
   }
  
-  /* Style the header section */
   header {
     background-color: #ff8300;
     color: #fff;
@@ -42,7 +40,6 @@
     text-decoration: none;
   }
  
-  /* Style the main section */
   main {
     max-width: 1200px;
     margin: 0 auto;
@@ -140,3 +137,29 @@
     background-color: #f1f1f1;
   }
   
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #d48484;
+    border-radius: 5px;
+}
+
+input, button {
+    margin: 5px 0;
+    padding: 8px;
+    border-radius: 3px;
+    border: 1px solid #642c34;
+}
+
+button {
+    background-color: #e3bc84;
+    color: #efd2f3;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #3b4887;
+}
