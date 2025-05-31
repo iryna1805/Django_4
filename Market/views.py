@@ -1,28 +1,28 @@
 from django.shortcuts import render, redirect
-from .models import Musician, Album
+from .models import FeaturedProduct, TopProduct, Product
 from django.contrib.auth import login, authenticate
-from .forms import UserRegisterForm, AdminRegisterForm
+from .forms import UserRegisterForm, AdminRegisterForm, ProductForm
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required, user_passes_test
 
+def is_admin(user):
+    return user.is_staff
 
 def home(request):
-    musicians_list = Musician.objects.all()
-    albums_list = Album.objects.all()
+    products = Product.objects.filter(available=True)
+    featured = FeaturedProduct.objects.all()
+    top = TopProduct.objects.all()
 
-    # Пагінація
-    paginator_musicians = Paginator(musicians_list, 5)  
-    page_number_musicians = request.GET.get('page_musicians')
-    musicians = paginator_musicians.get_page(page_number_musicians)
+    featured_products = [fp.product for fp in featured]
+    top_products = [tp.product for tp in top]
 
-    # Пагінація
-    paginator_albums = Paginator(albums_list, 5)
-    page_number_albums = request.GET.get('page_albums')
-    albums = paginator_albums.get_page(page_number_albums)
-
-    return render(request, 'Market/index.html', {'musicians': musicians, 'albums': albums})
-
-def about(request):
-    return render(request, 'Market/about_me.html')
+    context = {
+        'products': products,
+        'featured_products': featured_products,
+        'top_products': top_products,
+        'is_admin': request.user.is_staff,
+    }
+    return render(request, 'Market/index.html', context)
 
 def register(request):
     if request.method == 'POST':
@@ -34,17 +34,42 @@ def register(request):
         form = UserRegisterForm()
     return render(request, 'Market/register.html', {'form': form})
 
+@login_required
+@user_passes_test(is_admin)
+def add_product(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = ProductForm()
+    return render(request, 'Market/add_product.html', {'form': form})
+
+@login_required
+@user_passes_test(is_admin)
+def admin_lists(request):
+    featured = FeaturedProduct.objects.all()
+    top = TopProduct.objects.all()
+    context = {
+        'featured': featured,
+        'top': top,
+    }
+    return render(request, 'Market/admin_lists.html', context)
+
+
+def about(request):
+    return render(request, 'Market/about_me.html')
+
+def login_view(request):
+    return render(request, 'Market/login.html')
 
 def admin_register(request):
     if request.method == 'POST':
         form = AdminRegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('login')
+            return redirect('home')  
     else:
         form = AdminRegisterForm()
     return render(request, 'Market/admin_register.html', {'form': form})
-
-
-def login_view(request):
-    return render(request, 'Market/login.html')
