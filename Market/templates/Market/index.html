@@ -69,8 +69,24 @@
     <td>{{ musician.name }}</td>
     <td>{{ musician.age }}</td>
   </tr>
+  {% empty %}
+  <tr><td colspan="2">No musicians found.</td></tr>
   {% endfor %}
 </table>
+
+<div>
+  <span>
+    {% if musicians.has_previous %}
+      <a href="?page_musicians={{ musicians.previous_page_number }}">Prev</a>
+    {% endif %}
+  </span>
+  <span>Сторінка {{ musicians.number }} з {{ musicians.paginator.num_pages }}</span>
+  <span>
+    {% if musicians.has_next %}
+      <a href="?page_musicians={{ musicians.next_page_number }}">Next</a>
+    {% endif %}
+  </span>
+</div>
 
 <h2>Albums</h2>
 <table border="1">
@@ -83,6 +99,22 @@
     <td>{{ album.name }}</td>
     <td>{{ album.age }}</td>
   </tr>
+  {% empty %}
+  <tr><td colspan="2">No albums found.</td></tr>
   {% endfor %}
 </table>
+
+<div>
+  <span>
+    {% if albums.has_previous %}
+      <a href="?page_albums={{ albums.previous_page_number }}">Prev</a>
+    {% endif %}
+  </span>
+  <span>Сторінка {{ albums.number }} з {{ albums.paginator.num_pages }}</span>
+  <span>
+    {% if albums.has_next %}
+      <a href="?page_albums={{ albums.next_page_number }}">Next</a>
+    {% endif %}
+  </span>
+</div>
 {% endblock %}
