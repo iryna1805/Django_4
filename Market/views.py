@@ -8,8 +8,15 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 def is_admin(user):
     return user.is_staff
 
+from django.core.paginator import Paginator
+
 def home(request):
-    products = Product.objects.filter(available=True)
+    products_list = Product.objects.filter(available=True).order_by('-price')
+    paginator = Paginator(products_list, 6)  # 6 продуктів на сторінці
+
+    page_number = request.GET.get('page')
+    products = paginator.get_page(page_number)
+
     featured = FeaturedProduct.objects.all()
     top = TopProduct.objects.all()
 
@@ -23,6 +30,7 @@ def home(request):
         'is_admin': request.user.is_staff,
     }
     return render(request, 'Market/index.html', context)
+
 
 def register(request):
     if request.method == 'POST':

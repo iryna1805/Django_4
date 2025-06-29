@@ -56,6 +56,18 @@
       <button>Купити</button>
     </li>
   </ul>
+
+  <div style="text-align: center;">
+    {% if products.has_previous %}
+      <a href="?page={{ products.previous_page_number }}">Попередня</a>
+    {% endif %}
+
+    <span>Сторінка {{ products.number }} з {{ products.paginator.num_pages }}</span>
+
+    {% if products.has_next %}
+      <a href="?page={{ products.next_page_number }}">Наступна</a>
+    {% endif %}
+  </div>
 </section>
 
 <h2>Musicians</h2>
