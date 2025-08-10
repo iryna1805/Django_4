@@ -5,6 +5,24 @@ from .forms import UserRegisterForm, AdminRegisterForm, ProductForm
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required, user_passes_test
 
+
+from django.http import HttpResponse
+
+def set_cookie_view(request):
+    response = HttpResponse("Cookie встановлено!")
+    # name = значення, max_age = час життя в секундах
+    response.set_cookie("username", "iraba", max_age=3600)  # 1година
+    return response
+
+def get_cookie_view(request):
+    username = request.COOKIES.get("username", "Гість")
+    return HttpResponse(f"Привіт, {username}!")
+
+def delete_cookie_view(request):
+    response = HttpResponse("Cookie видалено!")
+    response.delete_cookie("username")
+    return response
+#
 def is_admin(user):
     return user.is_staff
 

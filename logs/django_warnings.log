@@ -1,1 +1,4 @@
 WARNING 2025-06-30 17:44:33,298 basehttp "GET /favicon.ico HTTP/1.1" 404 4277
+WARNING 2025-08-10 13:08:39,950 basehttp "GET /favicon.ico HTTP/1.1" 404 4277
+WARNING 2025-08-10 13:15:03,851 basehttp "GET /favicon.ico HTTP/1.1" 404 5072
+WARNING 2025-08-10 13:15:47,774 basehttp "GET /getcookie/ HTTP/1.1" 404 5069
